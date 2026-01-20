@@ -7,13 +7,17 @@
 }
 
 :root {
-    --navy-blue: #0a192f;   /* Azul Marinho Profundo */
-    --light-navy: #112240;  /* Azul um pouco mais claro */
-    --black-bg: #000000;    /* Preto Fundo */
-    --silver: #C0C0C0;      /* Prata sólido */
-    --silver-grad: linear-gradient(135deg, #E0E0E0 0%, #A9A9A9 100%); /* Gradiente Prata */
+    /* Cores em Hexadecimal */
+    --navy-blue: #0a192f;   
+    --light-navy: #112240;  
+    --black-bg: #000000;    
+    --silver: #C0C0C0;      
+    --lead-gray: #2b2b2b;
     --white: #ffffff;
     --whatsapp-green: #25D366;
+    
+    /* Gradientes */
+    --silver-grad: linear-gradient(135deg, #E0E0E0 0%, #A9A9A9 100%);
 }
 
 html {
@@ -26,16 +30,22 @@ body {
     overflow-x: hidden;
 }
 
-/* --- Header / Navbar --- */
+/* --- Header / Navbar (COM TRANSPARÊNCIA) --- */
 header {
-    background-color: var(--navy-blue);
+    /* MUDANÇA AQUI: Cor RGB do Azul Marinho com 0.9 (90%) de opacidade */
+    background-color: rgba(10, 25, 47, 0.5);
+    
+    /* Efeito de Vidro Fosco (Blur) para o que passar por trás */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* Para Safari */
+    
     padding: 1rem 5%;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    border-bottom: 2px solid #333;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borda mais sutil */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .navbar {
@@ -81,26 +91,47 @@ header {
     text-shadow: 0 0 8px rgba(255,255,255,0.4);
 }
 
-/* --- Hero Section --- */
+/* --- Hero Section (Banner Principal) --- */
 .hero-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-    /* AJUSTE: Reduzi o padding-top de 120px para 100px para ganhar espaço */
     padding: 100px 5% 40px;
-    background: linear-gradient(100deg, var(--navy-blue) 40%, var(--black-bg) 100%);
+    
+    /* Degradê linear da direita (grafite) para a esquerda (azul marinho) */
+    background: linear-gradient(to left, var(--lead-gray), var(--navy-blue));
+    
     position: relative;
+    overflow: hidden; 
 }
 
+/* --- Camada da Imagem de Fundo (Transparente) --- */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('bg_contabilidade.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.50; 
+    z-index: 0;
+    mix-blend-mode: overlay;
+}
+
+/* Camada do efeito de luz radial */
 .hero-section::after {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
-    width: 40%;
+    width: 50%;
     height: 100%;
-    background: radial-gradient(circle at center, rgba(192,192,192,0.08), transparent);
+    background: radial-gradient(circle at center, rgba(192,192,192,0.1), transparent 70%);
     z-index: 0;
     pointer-events: none;
 }
@@ -108,39 +139,38 @@ header {
 .hero-content {
     flex: 1;
     max-width: 600px;
-    z-index: 1;
+    z-index: 2;
     text-align: left;
 }
 
 .hero-content h1 {
     font-size: 3.5rem;
     color: var(--white);
-    /* AJUSTE: Reduzi margem de 20px para 10px */
     margin-bottom: 10px;
     line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero-content p {
     font-size: 1.1rem;
     color: #cccccc;
-    /* AJUSTE: Reduzi margem de 30px para 20px */
     margin-bottom: 20px;
     line-height: 1.6;
 }
 
 .hero-benefits {
     list-style: none;
-    /* AJUSTE: Reduzi margem de 40px para 25px (Isso puxa o botão pra cima) */
     margin-bottom: 25px;
     padding-left: 0;
 }
 
 .hero-benefits li {
-    margin-bottom: 8px; /* Reduzi levemente o espaço entre itens da lista */
+    margin-bottom: 8px;
     font-size: 1rem;
     display: flex;
     align-items: center;
     gap: 10px;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
 }
 
 .hero-benefits i {
@@ -152,8 +182,8 @@ header {
     display: flex;
     flex-direction: column;
     align-items: flex-start; 
-    gap: 10px; /* Reduzi o gap entre o texto "Faça já" e o botão */
-    margin-top: 10px; /* Reduzi margem superior */
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .cta-text {
@@ -199,7 +229,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
 }
 
 .hero-img-effect {
@@ -325,7 +355,8 @@ footer {
         top: 70px;
         gap: 0;
         flex-direction: column;
-        background-color: var(--navy-blue);
+        background-color: rgba(10, 25, 47, 0.95); /* Menu Mobile também transparente */
+        backdrop-filter: blur(10px);
         width: 100%;
         text-align: center;
         transition: 0.3s;
